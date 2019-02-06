@@ -37,13 +37,27 @@ export class TreeComponent implements OnInit {
   }
 
   checkNode(nodes:TreeNode[], str:string[]) {
-    nodes.forEach(node => {      
+    nodes.forEach(node => {
+      //check parent      
+      if(str.includes(node.label)) {
+        this.selectedFiles.push(node);
+      }
+
       if(node.children != undefined){
         node.children.forEach(child => {
-          if(str.includes(child.label)) {
+          //check child if the parent is not selected
+          if(str.includes(child.label) && !str.includes(node.label)) {
             node.partialSelected = true;
             child.parent = node;
             this.selectedFiles.push(child);
+          }
+
+          //check the child if the parent is selected
+          //push the parent in str to new iteration and mark all the childs
+          if(str.includes(node.label)){
+            child.parent = node;
+            this.selectedFiles.push(child);
+            str.push(child.label);
           }
         });
       }else{
