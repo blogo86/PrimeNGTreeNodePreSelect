@@ -49,14 +49,12 @@ export class TreeComponent implements OnInit {
           if(str.includes(child.label) && !str.includes(node.label)) {
             node.partialSelected = true;
             child.parent = node;
-            this.selectedFiles.push(child);
           }
 
           //check the child if the parent is selected
           //push the parent in str to new iteration and mark all the childs
           if(str.includes(node.label)){
             child.parent = node;
-            this.selectedFiles.push(child);
             str.push(child.label);
           }
         });
